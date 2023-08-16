@@ -15,7 +15,21 @@ module.exports = {
 		all: [],
 		find: [],
 		get: [],
-		create: [],
+		create: [
+			async (context) => {
+				const { app, result } = context;
+				try {
+					const Users = app.service('users').Model;
+					const Notifications = await app.service('notifications').Model;
+					const notification = await Notifications.findByPk(result.id);
+					const users = await Users.findAll({ attributes: ['id'] });
+					await notification.addUsers(users);
+				} catch (error) {
+					console.error('Error associating users:', error);
+				}
+				return context;
+			}
+		],
 		update: [],
 		patch: [],
 		remove: []

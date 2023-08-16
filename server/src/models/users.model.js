@@ -36,9 +36,13 @@ module.exports = function (app) {
 	);
 
 	// eslint-disable-next-line no-unused-vars
-	users.associate = function (models) {
-		// Define associations here
-		// See https://sequelize.org/master/manual/assocs.html
+	users.associate = function ({ notifications, userNotifications }) {
+		users.belongsToMany(notifications, {
+			through: 'user_notifications',
+			foreignKey: 'userId',
+			otherKey: 'notificationId',
+			as: 'notifications'
+		});
 	};
 
 	return users;
