@@ -1,8 +1,14 @@
 const notificationQueue = require('../queues/notificationQueue');
 
-notificationQueue.process('attachNotifications', async (job) => {
-	const { notification, usersService } = job.data;
-	const users = await usersService.find();
+notificationQueue.process('attachNotifications', async ({ notification, userService }) => {
+	try {
+		const { Model } = userService;
 
-	notification.addUsers(users);
+		const users = await await Model.findAll({ attributes: ['id'] });
+
+		notification.addUsers(users);
+	} catch (error) {
+		console.log('something went wrong attaching notification to existing users');
+		console.log(error);
+	}
 });

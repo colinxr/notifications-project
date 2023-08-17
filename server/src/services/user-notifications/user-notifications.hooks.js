@@ -1,9 +1,10 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
+// const { authenticate } = require('@feathersjs/authentication').hooks
+const { filterNotificationsByUserId } = require('./hooks');
 
 module.exports = {
 	before: {
-		all: [authenticate('jwt')],
-		find: [],
+		all: [],
+		find: [filterNotificationsByUserId()],
 		get: [],
 		create: [],
 		update: [],

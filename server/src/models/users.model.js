@@ -40,8 +40,7 @@ module.exports = function (app) {
 		users.belongsToMany(notifications, {
 			through: 'user_notifications',
 			foreignKey: 'userId',
-			otherKey: 'notificationId',
-			as: 'notifications'
+			otherKey: 'notificationId'
 		});
 	};
 

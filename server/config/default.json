@@ -30,5 +30,5 @@
 		"port": 6379,
 		"db": 0
 	},
-	"mysql": "mysql://root:root@127.0.0.1:3306/web-platform-base"
+	"mysql": "mysql://root:@localhost:3306/Tactus"
 }

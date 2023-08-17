@@ -38,6 +38,15 @@
 		],
 		"ignore": []
 	},
+	"jest": {
+		"testEnvironment": "node",
+		"transform": {
+			"^.+\\.js$": "babel-jest"
+		},
+		"moduleNameMapper": {
+			"axios": "axios/dist/node/axios.cjs"
+		}
+	},
 	"dependencies": {
 		"@feathersjs/authentication": "^4.5.18",
 		"@feathersjs/authentication-local": "^4.5.18",
@@ -60,8 +69,12 @@
 		"winston": "^3.10.0"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.22.10",
+		"@babel/preset-env": "^7.22.10",
 		"@faker-js/faker": "^8.0.2",
 		"@feathersjs/cli": "4.5",
+		"axios": "^1.4.0",
+		"babel-jest": "^29.6.2",
 		"eslint": "^7.0.0",
 		"eslint-config-prettier": "^7.0.0",
 		"eslint-plugin-prettier": "^3.3.0",

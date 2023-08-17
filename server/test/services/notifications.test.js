@@ -1,28 +1,18 @@
-const { BadRequest } = require('@feathersjs/errors');
-const { faker } = require('@faker-js/faker');
-
 const app = require('../../src/app');
 const sequelize = app.get('sequelizeClient');
-
-const Users = require('../../src/models/users.model');
+const { createUsers } = require('../factories/user.factory');
+const { BadRequest } = require('@feathersjs/errors');
 
 beforeAll(async () => {
 	await sequelize.sync({ force: true });
 });
 
-const createUsersFactory = async (numToCreate = 10) => {
-	const array = Array.from({ length: numToCreate }, (_, index) => index);
+// const createUsers = async (numToCreate = 10) => {
+// 	const array = Array.from({ length: numToCreate }, (_, index) => index);
 
-	// eslint-disable-next-line no-unused-vars
-	const userObjects = array.map((el) => ({
-		firstName: faker.person.firstName(),
-		lastName: faker.person.lastName(),
-		email: faker.internet.email(),
-		password: faker.internet.password()
-	}));
-
-	return Users(app).bulkCreate(userObjects);
-};
+// 	// eslint-disable-next-line no-unused-vars
+// 	return Promise.all(array.map(async (el) => await userFactory({})));
+// };
 
 describe("'Notifications' service", () => {
 	it('registered the service', () => {
@@ -61,7 +51,8 @@ describe("'Notifications' service", () => {
 
 	it('has association with users notifications model', async () => {
 		// create users
-		const users = await createUsersFactory(2);
+		console.log(createUsers);
+		const users = await createUsers(2);
 
 		// create notifications
 		const notification = await app.service('notifications').Model.create({
@@ -80,9 +71,11 @@ describe("'Notifications' service", () => {
 	});
 
 	it('attaches a new notification to all existing users', async () => {
+		// create users
 		const numUsersToNotify = 5;
-		await createUsersFactory(numUsersToNotify);
+		await createUsers(numUsersToNotify);
 
+		// create notification
 		// eslint-disable-next-line no-unused-vars
 		const data = await app.service('notifications').create({
 			title: 'Test title',
