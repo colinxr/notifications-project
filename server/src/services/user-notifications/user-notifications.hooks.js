@@ -6,7 +6,7 @@ module.exports = {
 	before: {
 		all: [],
 		find: [addAssociated(), filterByUserId()],
-		get: [addAssociated(), filterByUserId()],
+		get: [addAssociated()],
 		create: [],
 		update: [],
 		patch: [],
