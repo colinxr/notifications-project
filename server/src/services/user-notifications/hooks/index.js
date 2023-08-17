@@ -1,5 +1,7 @@
-const filterNotificationsByUserId = require('./filterNotificationsByUserId');
+const addAssociated = require('./addAssociated');
+const filterByUserId = require('./filterByUserId');
 
 module.exports = {
-	filterNotificationsByUserId
+	addAssociated,
+	filterByUserId
 };

@@ -1,11 +1,12 @@
 // const { authenticate } = require('@feathersjs/authentication').hooks
-const { filterNotificationsByUserId } = require('./hooks');
+// const notificationsModel = require('../../models/notifications.model');
+const { addAssociated, filterByUserId } = require('./hooks');
 
 module.exports = {
 	before: {
 		all: [],
-		find: [filterNotificationsByUserId()],
-		get: [],
+		find: [addAssociated(), filterByUserId()],
+		get: [addAssociated(), filterByUserId()],
 		create: [],
 		update: [],
 		patch: [],

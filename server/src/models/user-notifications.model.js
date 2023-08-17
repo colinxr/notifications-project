@@ -11,5 +11,9 @@ module.exports = function (app) {
 		}
 	});
 
+	userNotifications.associate = function ({ notifications }) {
+		userNotifications.belongsTo(notifications);
+	};
+
 	return userNotifications;
 };

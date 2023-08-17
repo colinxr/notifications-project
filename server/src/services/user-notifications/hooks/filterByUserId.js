@@ -2,13 +2,13 @@ const { BadRequest } = require('@feathersjs/errors');
 
 module.exports = () => {
 	return async (context) => {
-		const { params } = context;
-		const { query } = params;
+		const { query } = context.params;
 
+		// this uses a query param, but with authentication,
+		// would find the authenticated users with their JWT AuthToken
 		if (!query.userId) throw new BadRequest('No UserID Query Param provided');
 
 		context.params.query.userId = query.userId;
-		delete context.params.query.userId; // Optional: Remove the userId from the query to prevent duplication
 
 		return context;
 	};
