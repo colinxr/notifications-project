@@ -1,0 +1,58 @@
+<script>
+  export default {
+    name: "NotificationsCard",
+
+    props: {
+      notification: Object,
+    },
+
+    methods: {
+      handleOpen() {
+        alert(this.notification["notification.title"])
+      },
+    },
+  }
+</script>
+
+<template>
+  <div class="notifications__card" @click="handleOpen">
+    <div class="notifications__card__icon"></div>
+
+    <div class="notifications__card__body">
+      <span>{{ new Date(notification.createdAt) }}</span>
+
+      <h3>{{ notification["notification.title"] }}</h3>
+    </div>
+
+    <div class="notifications__alert" v-if="!notification.readAt"></div>
+  </div>
+</template>
+
+<style lang="scss">
+  .notifications__card {
+    position: relative;
+    padding: 5px;
+    border-bottom: 1px solid grey;
+    color: white;
+    display: flex;
+    cursor: pointer;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+
+      span {
+        margin-bottom: 5px;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .notifications__alert {
+      top: 0;
+      right: 0;
+    }
+  }
+</style>

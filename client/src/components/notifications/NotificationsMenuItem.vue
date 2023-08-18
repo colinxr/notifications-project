@@ -60,6 +60,7 @@
           ></path>
         </svg>
       </AppButton>
+
       <div
         class="notifications__alert"
         v-if="unreadNotificiations.length"
@@ -78,6 +79,8 @@
 
 <style lang="scss">
   .notifications {
+    position: relative;
+
     &__trigger {
       position: relative;
     }
@@ -90,6 +93,12 @@
       height: 8px;
       background-color: red;
       border-radius: 4px;
+    }
+
+    &__pane {
+      position: absolute;
+      margin-top: 5px;
+      top: 200%;
     }
   }
 </style>
