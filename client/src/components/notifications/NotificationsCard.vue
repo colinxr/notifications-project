@@ -6,6 +6,36 @@
       notification: Object,
     },
 
+    computed: {
+      date() {
+        const dateString = new Date(this.notification.createdAt)
+        // Define month names
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ]
+
+        // Get the full month name
+        const fullMonth = monthNames[dateString.getMonth()]
+
+        // Get day and year
+        const day = dateString.getDate()
+        const year = dateString.getFullYear()
+
+        return `${fullMonth} ${day}, ${year}`
+      },
+    },
+
     methods: {
       handleOpen() {
         alert(this.notification["notification.title"])
@@ -19,7 +49,7 @@
     <div class="notifications__card__icon"></div>
 
     <div class="notifications__card__body">
-      <span>{{ new Date(notification.createdAt) }}</span>
+      <span>{{ date }}</span>
 
       <h3>{{ notification["notification.title"] }}</h3>
     </div>
