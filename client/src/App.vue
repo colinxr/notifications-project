@@ -1,39 +1,44 @@
 <script>
-import { getServiceStore } from '@/plugins/FeathersAPI';
+  import { getServiceStore } from "@/plugins/FeathersAPI"
 
-export default {
-	name: 'App',
+  import AppHeader from "./components/AppHeader.vue"
 
-	async created() {
-		if (!this.$route.query.userId) {
-			await this.$router.replace({ query: { ...this.$route.query, userId: 1 } });
-		}
+  export default {
+    name: "App",
+    components: {
+      AppHeader,
+    },
 
-		const Notifications = getServiceStore('user/notifications');
+    async created() {
+      if (!this.$route.query.userId) {
+        await this.$router.replace({
+          query: { ...this.$route.query, userId: 1 },
+        })
+      }
 
-		await Notifications.fetchForUser(this.$route.query.userId);
+      await getServiceStore("user/notifications").fetchForUser(
+        this.$route.query.userId
+      )
+    },
+  }
 
-		console.log();
+  // to do - front-end
+  // components dir
+  // header
+  // 1. build nav bar
+  // 2. on click open notification pane
+  // 3. build card component
 
-		console.log(Notifications.all);
-		// Perform any other actions
-	}
-};
-
-// to do - front-end
-// 1. build nav bar
-// 2. on click open notification pane
-// 3. build card component
-
-// to do -- hook up
-// 1. set current user as userId query param in url
-// 2. onMounted fetch notifications for the current user
-// 3. Pass those notifications into the notifications pane
-// 4. Any unread notifications get send to modal
+  // to do -- hook up
+  // ✅ 1. set current user as userId query param in url
+  // ✅ 2. onMounted fetch notifications for the current user
+  // 3. Pass those notifications into the notifications pane
+  // 4. Any unread notifications get send to modal
 </script>
 
 <template>
-	<router-view />
+  <AppHeader />
+  <router-view />
 </template>
 
 <style lang="scss"></style>

@@ -1,7 +1,8 @@
 export default {
-	servicePath: 'users',
-	modelName: 'User',
-	setupInstance(data, { models }) {
-		return data;
-	}
-};
+  servicePath: "users",
+  modelName: "User",
+  /* eslint-disable-next-line */
+  setupInstance(data, { models }) {
+    return data
+  },
+}
