@@ -5,9 +5,9 @@ const { Op } = require('sequelize');
 const { userFactory } = require('../factories/user.factory');
 const { createNotifications } = require('../factories/notification.factory');
 
+let user;
 describe("'UserNotifications' service", () => {
 	let server;
-	let user;
 
 	beforeEach(async () => {
 		server = app.listen(app.get('port'));
@@ -36,6 +36,8 @@ describe("'UserNotifications' service", () => {
 	});
 
 	it('can get the notifications filtered by User ID', async () => {
+		console.log(user);
+
 		const { data } = await app.service('user/notifications').find({
 			query: {
 				userId: user.id

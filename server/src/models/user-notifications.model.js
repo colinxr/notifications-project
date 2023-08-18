@@ -5,11 +5,6 @@ const { DataTypes } = require('sequelize');
 module.exports = function (app) {
 	const sequelizeClient = app.get('sequelizeClient');
 	const userNotifications = sequelizeClient.define('user_notifications', {
-		id: {
-			type: DataTypes.INTEGER,
-			autoIncrement: true,
-			primaryKey: true
-		},
 		readAt: {
 			type: DataTypes.DATE,
 			allowNull: true
