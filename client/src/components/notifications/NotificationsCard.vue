@@ -1,4 +1,7 @@
 <script>
+  import { useDate } from "../../composables/useDateComposable"
+  const { getReadableDate } = useDate()
+
   export default {
     name: "NotificationsCard",
 
@@ -6,34 +9,10 @@
       notification: Object,
     },
 
-    computed: {
-      date() {
-        const dateString = new Date(this.notification.createdAt)
-        // Define month names
-        const monthNames = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ]
+    mixins: [useDate],
 
-        // Get the full month name
-        const fullMonth = monthNames[dateString.getMonth()]
-
-        // Get day and year
-        const day = dateString.getDate()
-        const year = dateString.getFullYear()
-
-        return `${fullMonth} ${day}, ${year}`
-      },
+    created() {
+      this.date = getReadableDate(this.notification["notification.publishedAt"])
     },
 
     methods: {

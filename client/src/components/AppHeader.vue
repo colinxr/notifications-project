@@ -9,15 +9,15 @@
 </script>
 
 <template>
-  <header>
+  <header class="app-header">
     <h1>Tactus VRC Notifcations</h1>
 
     <HeaderNav />
   </header>
 </template>
 
-<style lang="scss">
-  header {
+<style lang="scss" scoped>
+  .app-header {
     height: 85px;
     background-color: rgb(17, 24, 39);
     display: flex;

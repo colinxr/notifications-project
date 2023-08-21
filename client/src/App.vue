@@ -1,12 +1,20 @@
 <script>
-  import { getServiceStore } from "@/plugins/FeathersAPI"
+  import { getServiceStore, serviceGetMixin } from "@/plugins/FeathersAPI"
 
   import AppHeader from "./components/AppHeader.vue"
+  import NotificationsModal from "./components/notifications/NotificationsModal.vue"
 
   export default {
     name: "App",
     components: {
       AppHeader,
+      NotificationsModal,
+    },
+
+    data() {
+      return {
+        modalIsOpen: false,
+      }
     },
 
     async created() {
@@ -19,6 +27,20 @@
       await getServiceStore("user/notifications").fetchForUser(
         this.$route.query.userId
       )
+    },
+
+    computed: {
+      unreadNotifications() {
+        return getServiceStore("user/notifications").unread
+      },
+    },
+
+    watch: {
+      unreadNotifications(newVal) {
+        if (!newVal.length) this.modalIsOpen = false
+
+        this.modalIsOpen = true
+      },
     },
   }
 
@@ -39,6 +61,19 @@
 <template>
   <AppHeader />
   <router-view />
+
+  <NotificationsModal
+    :showModal="modalIsOpen"
+    :notifications="unreadNotifications"
+  />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+  h1 {
+    font-family: Poppins;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+</style>
