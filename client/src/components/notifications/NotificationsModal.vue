@@ -3,6 +3,7 @@
 
   import ModalContainer from "../modal/ModalContainer.vue"
   import NotificationsDetail from "./NotificationsDetail.vue"
+  import { log } from "console"
 
   export default {
     name: "NotificationsModal",
@@ -25,9 +26,12 @@
       },
 
       async markNotificationsAsRead() {
-        const ids = this.notifications.map(({ id }) => id)
-        const resp =
-          await getServiceStore("user/notifications").read(notifications)
+        try {
+          const ids = this.notifications.map(({ id }) => id)
+          const resp = await getServiceStore("user/notifications").read(id)
+        } catch (error) {
+          console.log(error)
+        }
       },
     },
 

@@ -73,22 +73,18 @@ describe("'UserNotifications' service", () => {
 	});
 
 	it('can mark user notification as read', async () => {
-		try {
-			const notifications = await app.service('user/notifications').Model.findAll({ limit: 1, attributes: ['id'] });
-			/* eslint-disable-next-line */
-			const resp = await app.service('user/notifications').read(notifications[0].id);
+		const notifications = await app.service('user/notifications').Model.findAll({ limit: 1, attributes: ['id'] });
+		/* eslint-disable-next-line */
+		const resp = await app.service('user/notifications').markAsRead(notifications[0].id);
 
-			const readNotifications = await app.service('user/notifications').Model.findAll({
-				where: {
-					readAt: { [Op.not]: null }
-				}
-			});
+		const readNotifications = await app.service('user/notifications').Model.findAll({
+			where: {
+				readAt: { [Op.not]: null }
+			}
+		});
 
-			expect(readNotifications.length).toEqual(1);
-			expect(readNotifications[0].id).toEqual(notifications[0].id);
-		} catch (error) {
-			console.log(error);
-		}
+		expect(readNotifications.length).toEqual(1);
+		expect(readNotifications[0].id).toEqual(notifications[0].id);
 	});
 
 	it('can mark an array of notification ids as read', async () => {
@@ -96,7 +92,7 @@ describe("'UserNotifications' service", () => {
 		const ids = notifications.map(({ id }) => id);
 
 		/* eslint-disable-next-line */
-		const resp = await app.service('user/notifications').read(ids);
+		const resp = await app.service('user/notifications').markAsRead(ids);
 
 		const readNotifications = await app.service('user/notifications').Model.findAll({
 			where: {
