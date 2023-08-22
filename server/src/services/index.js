@@ -9,11 +9,12 @@ module.exports = function (app) {
 
 	const sequelize = app.get('sequelizeClient');
 
-	Object.keys(sequelize.models).forEach(function (modelName) {
-		if ('associate' in sequelize.models[modelName]) {
-			sequelize.models[modelName].associate(sequelize.models);
-		}
-	});
-
+	if (process.env.NODE_ENV === 'test') {
+		Object.keys(sequelize.models).forEach(function (modelName) {
+			if ('associate' in sequelize.models[modelName]) {
+				sequelize.models[modelName].associate(sequelize.models);
+			}
+		});
+	}
 	sequelize.sync({ force: false });
 };

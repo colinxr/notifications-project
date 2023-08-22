@@ -4,15 +4,14 @@ const { createUsers } = require('../factories/user.factory');
 const { BadRequest } = require('@feathersjs/errors');
 
 beforeAll(async () => {
-	await sequelize.sync({ force: true });
+	await sequelize.sync({ force: true, alter: true });
+
+	Object.keys(sequelize.models).forEach(function (modelName) {
+		if ('associate' in sequelize.models[modelName]) {
+			sequelize.models[modelName].associate(sequelize.models);
+		}
+	});
 });
-
-// const createUsers = async (numToCreate = 10) => {
-// 	const array = Array.from({ length: numToCreate }, (_, index) => index);
-
-// 	// eslint-disable-next-line no-unused-vars
-// 	return Promise.all(array.map(async (el) => await userFactory({})));
-// };
 
 describe("'Notifications' service", () => {
 	it('registered the service', () => {
@@ -50,8 +49,6 @@ describe("'Notifications' service", () => {
 	});
 
 	it('has association with users notifications model', async () => {
-		// create users
-		console.log(createUsers);
 		const users = await createUsers(2);
 
 		// create notifications

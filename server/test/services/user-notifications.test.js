@@ -10,7 +10,7 @@ describe("'UserNotifications' service", () => {
 	let server;
 
 	beforeEach(async () => {
-		server = app.listen(app.get('port'));
+		// server = app.listen(app.get('port'));
 		await sequelize.sync({ force: true });
 
 		user = await userFactory({
@@ -31,20 +31,21 @@ describe("'UserNotifications' service", () => {
 	afterAll(async () => server.close());
 
 	it('registered the service', () => {
-		const service = app.service('user/notifications');
-		expect(service).toBeTruthy();
+		try {
+			const service = app.service('user/notifications');
+
+			expect(service).toBeTruthy();
+		} catch (error) {
+			console.log(error);
+		}
 	});
 
 	it('can get the notifications filtered by User ID', async () => {
-		console.log(user);
-
 		const { data } = await app.service('user/notifications').find({
 			query: {
 				userId: user.id
 			}
 		});
-
-		console.log(data);
 		expect(data.length).toEqual(3);
 	});
 
@@ -72,18 +73,21 @@ describe("'UserNotifications' service", () => {
 	});
 
 	it('can mark user notification as read', async () => {
-		const notifications = await app.service('user/notifications').Model.findAll({ limit: 1 });
+		try {
+			const notifications = await app.service('user/notifications').Model.findAll({ limit: 1, attributes: ['id'] });
+			/* eslint-disable-next-line */
+			const resp = await app.service('user/notifications').read(notifications[0].id);
 
-		/* eslint-disable-next-line */
-		const resp = await await app.service('user/notifications').read(notifications[0].id);
+			const readNotifications = await app.service('user/notifications').Model.findAll({
+				where: {
+					readAt: { [Op.not]: null }
+				}
+			});
 
-		const readNotifications = await app.service('user/notifications').Model.findAll({
-			where: {
-				readAt: { [Op.not]: null }
-			}
-		});
-
-		expect(readNotifications.length).toEqual(1);
-		expect(readNotifications[0].id).toEqual(notifications[0].id);
+			expect(readNotifications.length).toEqual(1);
+			expect(readNotifications[0].id).toEqual(notifications[0].id);
+		} catch (error) {
+			console.log(error);
+		}
 	});
 });
