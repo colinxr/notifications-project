@@ -1,12 +1,19 @@
 <script>
   import MarkdownIt from "markdown-it"
+  import AppButton from "../AppButton.vue"
+
   import { useDate } from "../../composables/useDateComposable"
-  const { getReadableDate } = useDate()
 
   const md = new MarkdownIt()
+  const { getReadableDate } = useDate()
 
   export default {
     name: "NotificationsDetail",
+
+    components: {
+      AppButton,
+    },
+
     props: {
       notification: {
         type: Object,
@@ -37,6 +44,12 @@
     </header>
 
     <div v-html="bodyText"></div>
+
+    <AppButton>
+      <a :href="`//${notification['notification.ctaUrl']}`">
+        {{ notification["notification.cta"] }}
+      </a>
+    </AppButton>
   </div>
 </template>
 

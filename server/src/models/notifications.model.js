@@ -26,6 +26,14 @@ module.exports = function (app) {
 					}
 				}
 			},
+			cta: {
+				type: DataTypes.TEXT,
+				allowNull: true
+			},
+			ctaUrl: {
+				type: DataTypes.TEXT,
+				allowNull: true
+			},
 			publishedAt: {
 				type: DataTypes.DATE,
 				allowNull: true
