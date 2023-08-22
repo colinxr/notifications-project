@@ -73,7 +73,6 @@ describe("'Notifications' service", () => {
 		await createUsers(numUsersToNotify);
 
 		// create notification
-		// eslint-disable-next-line no-unused-vars
 		const data = await app.service('notifications').create({
 			title: 'Test title',
 			body: 'test content'
@@ -89,5 +88,20 @@ describe("'Notifications' service", () => {
 
 		expect(notification.users).toBeTruthy();
 		expect(notification.users.length).toEqual(numUsersToNotify);
+	});
+
+	it('can have a CTA and CTA URL', async () => {
+		const notification = await app.service('notifications').create({
+			title: 'Test title',
+			body: 'test content',
+			cta: 'Learn More',
+			ctaUrl: 'www.google.com'
+		});
+
+		console.log(notification);
+
+		expect(notification.cta).toBeTruthy();
+		expect(notification.ctaUrl).toBeTruthy();
+		expect(notification.cta).toEqual('Learn More');
 	});
 });

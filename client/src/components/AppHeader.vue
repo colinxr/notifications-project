@@ -16,15 +16,15 @@
   </header>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .app-header {
     height: 85px;
-    background-color: rgb(17, 24, 39);
+    background-color: var(--secondary);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    color: white;
+    color: var(--neutral-white);
 
     ul {
       list-style-type: none;

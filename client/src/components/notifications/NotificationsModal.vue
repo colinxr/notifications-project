@@ -11,17 +11,23 @@
     },
 
     props: {
-      showModal: Boolean,
       notifications: {
         type: Array,
         required: true,
+      },
+    },
+
+    methods: {
+      handleClose() {
+        console.log("insideNotifications Modal")
+        this.emit("handleClose")
       },
     },
   }
 </script>
 
 <template>
-  <ModalContainer :showModal="modalIsOpen" @handleClose="modalIsOpen = false">
+  <ModalContainer @handleClose="$emit('handleClose')">
     <template v-slot:header>
       <h1>News</h1>
     </template>

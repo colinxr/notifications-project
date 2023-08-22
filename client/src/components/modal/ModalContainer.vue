@@ -8,7 +8,8 @@
 
     methods: {
       handleClose() {
-        this.$emit("closeModal")
+        console.log("inside Modal Container")
+        this.$emit("handleClose")
       },
     },
   }
@@ -76,8 +77,10 @@
     &__header {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 10px 40px;
       border-bottom: 1px solid var(--neutral-grey);
+      color: var(--primary);
     }
 
     &__close {
