@@ -75,8 +75,7 @@ describe("'UserNotifications' service", () => {
 	it('can mark user notification as read', async () => {
 		const notifications = await app.service('user/notifications').Model.findAll({ limit: 1, attributes: ['id'] });
 		/* eslint-disable-next-line */
-		const resp = await app.service('user/notifications').markAsRead(notifications[0].id);
-
+		const resp = await app.service('user/notifications').patch([notifications[0].id], { readAt: new Date() });
 		const readNotifications = await app.service('user/notifications').Model.findAll({
 			where: {
 				readAt: { [Op.not]: null }
@@ -92,7 +91,15 @@ describe("'UserNotifications' service", () => {
 		const ids = notifications.map(({ id }) => id);
 
 		/* eslint-disable-next-line */
-		const resp = await app.service('user/notifications').markAsRead(ids);
+		const resp = await app.service('user/notifications').patch(
+			null,
+			{ readAt: new Date() },
+			{
+				query: {
+					id: { $in: ids }
+				}
+			}
+		);
 
 		const readNotifications = await app.service('user/notifications').Model.findAll({
 			where: {
