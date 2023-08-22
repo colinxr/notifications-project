@@ -42,20 +42,26 @@
         this.modalIsOpen = true
       },
     },
+
+    methods: {
+      handleClose() {
+        console.log("wtf")
+      },
+    },
   }
 
   // to do - front-end
   // components dir
   // header
-  // 1. build nav bar
-  // 2. on click open notification pane
-  // 3. build card component
+  // ✅ 1. build nav bar
+  // ✅ 2. on click open notification pane
+  // ✅  3. build card component
 
   // to do -- hook up
   // ✅ 1. set current user as userId query param in url
   // ✅ 2. onMounted fetch notifications for the current user
-  // 3. Pass those notifications into the notifications pane
-  // 4. Any unread notifications get send to modal
+  // ✅ 3. Pass those notifications into the notifications pane
+  // ✅ 4. Any unread notifications get send to modal
 </script>
 
 <template>
@@ -63,8 +69,9 @@
   <router-view />
 
   <NotificationsModal
-    :showModal="modalIsOpen"
+    v-if="modalIsOpen"
     :notifications="unreadNotifications"
+    @handleClose="modalIsOpen = false"
   />
 </template>
 
