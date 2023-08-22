@@ -1,4 +1,6 @@
 <script>
+  import { getServiceStore } from "@/plugins/FeathersAPI"
+
   import ModalContainer from "../modal/ModalContainer.vue"
   import NotificationsDetail from "./NotificationsDetail.vue"
 
@@ -19,9 +21,18 @@
 
     methods: {
       handleClose() {
-        console.log("insideNotifications Modal")
         this.emit("handleClose")
       },
+
+      async markNotificationsAsRead() {
+        const ids = this.notifications.map(({ id }) => id)
+        const resp =
+          await getServiceStore("user/notifications").read(notifications)
+      },
+    },
+
+    mounted() {
+      markNotificationsAsRead()
     },
   }
 </script>

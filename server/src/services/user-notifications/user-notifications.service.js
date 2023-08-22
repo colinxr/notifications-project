@@ -6,7 +6,8 @@ const hooks = require('./user-notifications.hooks');
 module.exports = function (app) {
 	const options = {
 		Model: createModel(app),
-		paginate: app.get('paginate')
+		paginate: app.get('paginate'),
+		multi: ['patch']
 	};
 
 	// Initialize our service with any options it requires

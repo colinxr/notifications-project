@@ -37,6 +37,8 @@
 
     watch: {
       unreadNotifications(newVal) {
+        if (this.modalIsOpen) return null
+
         if (!newVal.length) this.modalIsOpen = false
 
         this.modalIsOpen = true
@@ -48,6 +50,7 @@
         console.log("wtf")
       },
     },
+
     head() {
       return {
         title: "Tactus Notifications Project",
@@ -73,19 +76,6 @@
       }
     },
   }
-
-  // to do - front-end
-  // components dir
-  // header
-  // ✅ 1. build nav bar
-  // ✅ 2. on click open notification pane
-  // ✅  3. build card component
-
-  // to do -- hook up
-  // ✅ 1. set current user as userId query param in url
-  // ✅ 2. onMounted fetch notifications for the current user
-  // ✅ 3. Pass those notifications into the notifications pane
-  // ✅ 4. Any unread notifications get send to modal
 </script>
 
 <template>

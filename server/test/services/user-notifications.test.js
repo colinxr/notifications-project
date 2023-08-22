@@ -90,4 +90,20 @@ describe("'UserNotifications' service", () => {
 			console.log(error);
 		}
 	});
+
+	it('can mark an array of notification ids as read', async () => {
+		const notifications = await app.service('user/notifications').Model.findAll({ attributes: ['id'] });
+		const ids = notifications.map(({ id }) => id);
+
+		/* eslint-disable-next-line */
+		const resp = await app.service('user/notifications').read(ids);
+
+		const readNotifications = await app.service('user/notifications').Model.findAll({
+			where: {
+				readAt: { [Op.not]: null }
+			}
+		});
+
+		expect(readNotifications.length).toEqual(notifications.length);
+	});
 });

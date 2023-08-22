@@ -1,17 +1,19 @@
 const { Service } = require('feathers-sequelize');
+const { Op } = require('sequelize');
+
 const { NotFound, GeneralError } = require('@feathersjs/errors');
 
 exports.UserNotifications = class UserNotifications extends Service {
-	async read(id) {
+	async read(ids) {
 		try {
-			const notification = await this.get(id);
-
-			if (!notification) {
-				throw new NotFound('Notification not found');
-			}
-
-			await this.patch(id, { readAt: new Date() });
-
+			await this.Model.update(
+				{ readAt: new Date() },
+				{
+					where: {
+						id: { [Op.in]: ids }
+					}
+				}
+			);
 			return null;
 		} catch (error) {
 			console.log(error);
