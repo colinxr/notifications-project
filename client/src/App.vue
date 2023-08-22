@@ -36,18 +36,8 @@
     },
 
     watch: {
-      unreadNotifications(newVal) {
-        if (this.modalIsOpen) return null
-
-        if (!newVal.length) this.modalIsOpen = false
-
-        this.modalIsOpen = true
-      },
-    },
-
-    methods: {
-      handleClose() {
-        console.log("wtf")
+      unreadNotifications(newVal, old) {
+        this.modalIsOpen = newVal.length ? true : false
       },
     },
 

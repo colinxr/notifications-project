@@ -24,8 +24,6 @@
 
     created() {
       this.date = getReadableDate(this.notification["notification.publishedAt"])
-
-      console.log(this.date)
     },
 
     computed: {

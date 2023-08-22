@@ -1,3 +1,4 @@
+import axios from "axios"
 export default {
   servicePath: "user/notifications",
   modelName: "UserNotification",
@@ -12,10 +13,22 @@ export default {
     unread: state => state.all.filter(({ readAt }) => readAt === null),
   },
   actions: {
-    fetchForUser: async function (userId) {
+    async fetchForUser(userId) {
       const { data } = await this.find({ query: { userId } })
 
       this.all = data
+    },
+
+    async markAsRead(idsToUpdate) {
+      const { data } = this.patch(
+        null,
+        { readAt: new Date() },
+        {
+          query: { id: { $in: idsToUpdate } },
+        }
+      )
+
+      return data
     },
   },
 }
