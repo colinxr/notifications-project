@@ -42,6 +42,36 @@
         this.modalIsOpen = true
       },
     },
+
+    methods: {
+      handleClose() {
+        console.log("wtf")
+      },
+    },
+    head() {
+      return {
+        title: "Tactus Notifications Project",
+        htmlAttrs: {
+          lang: "en",
+          amp: true,
+        },
+        link: [
+          {
+            rel: "preconnect",
+            href: "https://fonts.googleapis.com",
+          },
+          {
+            rel: "preconnect",
+            href: "https://fonts.gstatic.com",
+            crossorigin: "anonymous",
+          },
+          {
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400;1,600&display=swap",
+          },
+        ],
+      }
+    },
   }
 
   // to do - front-end
