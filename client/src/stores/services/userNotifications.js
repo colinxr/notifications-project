@@ -1,4 +1,3 @@
-import axios from "axios"
 export default {
   servicePath: "user/notifications",
   modelName: "UserNotification",

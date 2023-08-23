@@ -5,7 +5,8 @@ module.exports = () => {
 		context.params.sequelize = {
 			include: [
 				{
-					model: Model
+					model: Model,
+					as: 'notification'
 				}
 			],
 			order: [[Model, 'publishedAt', 'desc']]

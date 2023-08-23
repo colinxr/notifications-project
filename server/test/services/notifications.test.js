@@ -98,8 +98,6 @@ describe("'Notifications' service", () => {
 			ctaUrl: 'www.google.com'
 		});
 
-		console.log(notification);
-
 		expect(notification.cta).toBeTruthy();
 		expect(notification.ctaUrl).toBeTruthy();
 		expect(notification.cta).toEqual('Learn More');
@@ -122,5 +120,25 @@ describe("'Notifications' service", () => {
 
 		// check that model from db has updated title property
 		expect(model.title).toEqual(updated.title);
+	});
+
+	it('can be queried by userId', async () => {
+		const numUsersToNotify = 5;
+		const users = await createUsers(numUsersToNotify);
+
+		// create notification
+		/* eslint-disable-next-line */
+		const notification = await app.service('notifications').create({
+			title: 'Test title',
+			body: 'test content',
+			publishedAt: new Date()
+		});
+
+		const { data } = await app.service('notifications').find({ query: { userId: users[0].id } });
+
+		console.log(data);
+		expect(data.length).toEqual(1);
+		expect(data[0].readAt).toBe(null);
+		expect(data[0].userId).toBe(users[0].id);
 	});
 });

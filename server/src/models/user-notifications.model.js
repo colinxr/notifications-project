@@ -16,9 +16,11 @@ module.exports = function (app) {
 		}
 	});
 
-	userNotifications.associate = function ({ notifications }) {
-		userNotifications.belongsTo(notifications);
-	};
+	// userNotifications.associate = function ({ notifications }) {
+	// 	userNotifications.belongsTo(notifications, {
+	// 		as: 'notification'
+	// 	});
+	// };
 
 	return userNotifications;
 };

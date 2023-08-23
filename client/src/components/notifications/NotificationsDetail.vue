@@ -23,12 +23,17 @@
     mixins: [useDate],
 
     created() {
+      const date =
+        this.notification.publishedAt ||
+        this.notification["notification.publishedAt"]
       this.date = getReadableDate(this.notification["notification.publishedAt"])
     },
 
     computed: {
       bodyText() {
-        return md.render(this.notification["notification.body"])
+        const body =
+          this.notification.body || this.notification["notification.body"]
+        return md.render(body)
       },
     },
   }

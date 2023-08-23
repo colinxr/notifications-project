@@ -49,7 +49,7 @@ module.exports = function (app) {
 	);
 
 	// eslint-disable-next-line no-unused-vars
-	notifications.associate = function ({ users }) {
+	notifications.associate = function ({ users, user_notifications }) {
 		notifications.belongsToMany(users, {
 			through: 'user_notifications',
 			foreignKey: 'notificationId',
