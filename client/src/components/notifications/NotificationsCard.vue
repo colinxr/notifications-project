@@ -12,12 +12,12 @@
     mixins: [useDate],
 
     created() {
-      this.date = getReadableDate(this.notification["notification.publishedAt"])
+      this.date = getReadableDate(this.notification.publishedAt)
     },
 
     methods: {
       handleOpen() {
-        alert(this.notification["notification.title"])
+        alert(this.notification.title)
       },
     },
   }
@@ -30,7 +30,7 @@
     <div class="notifications__card__body">
       <span>{{ date }}</span>
 
-      <h3>{{ notification["notification.title"] }}</h3>
+      <h3>{{ notification.title }}</h3>
     </div>
 
     <div class="notifications__alert" v-if="!notification.readAt"></div>

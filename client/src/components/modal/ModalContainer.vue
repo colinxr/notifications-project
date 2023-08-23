@@ -8,7 +8,6 @@
 
     methods: {
       handleClose() {
-        console.log("inside Modal Container")
         this.$emit("handleClose")
       },
     },

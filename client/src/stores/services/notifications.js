@@ -5,4 +5,29 @@ export default {
   setupInstance(data, { models }) {
     return data
   },
+  state: {
+    all: [],
+  },
+  getters: {
+    unread: state => state.all.filter(({ readAt }) => readAt === null),
+  },
+  actions: {
+    async fetchForUser(userId) {
+      const { data } = await this.find({ query: { userId } })
+
+      this.all = data
+    },
+
+    updateAsRead(readOnServer) {
+      const idsToUpdate = readOnServer.map(el => el.id)
+      const updatedNotifications = this.all.map(el => {
+        if (!idsToUpdate.includes(el.user_notificationId)) return el
+
+        el.readAt = true
+        return el
+      })
+
+      this.all = updatedNotifications
+    },
+  },
 }

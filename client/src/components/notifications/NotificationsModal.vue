@@ -27,11 +27,13 @@
       },
 
       async markAllAsRead() {
-        console.log("runnngs")
-
-        const idsToUpdate = this.notifications.map(({ id }) => id)
+        const idsToUpdate = this.notifications.map(
+          ({ user_notificationId }) => user_notificationId
+        )
         const data =
           await getServiceStore("user/notifications").markAsRead(idsToUpdate)
+
+        console.log(data)
       },
     },
   }

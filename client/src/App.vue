@@ -24,14 +24,14 @@
         })
       }
 
-      await getServiceStore("user/notifications").fetchForUser(
+      await getServiceStore("notifications").fetchForUser(
         this.$route.query.userId
       )
     },
 
     computed: {
       unreadNotifications() {
-        return getServiceStore("user/notifications").unread
+        return getServiceStore("notifications").unread
       },
     },
 

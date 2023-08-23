@@ -20,11 +20,11 @@
 
     computed: {
       allNotifications() {
-        return getServiceStore("user/notifications").all
+        return getServiceStore("notifications").all
       },
 
       unreadNotificiations() {
-        return getServiceStore("user/notifications").unread
+        return getServiceStore("notifications").unread
       },
     },
 

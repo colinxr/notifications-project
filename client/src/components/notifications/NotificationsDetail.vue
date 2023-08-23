@@ -23,17 +23,12 @@
     mixins: [useDate],
 
     created() {
-      const date =
-        this.notification.publishedAt ||
-        this.notification["notification.publishedAt"]
-      this.date = getReadableDate(this.notification["notification.publishedAt"])
+      this.date = getReadableDate(this.notification.publishedAt)
     },
 
     computed: {
       bodyText() {
-        const body =
-          this.notification.body || this.notification["notification.body"]
-        return md.render(body)
+        return md.render(this.notification.body)
       },
     },
   }
@@ -43,14 +38,14 @@
   <div class="notification-detail">
     <header>
       <span>{{ date }}</span>
-      <h5>{{ notification["notification.title"] }}</h5>
+      <h5>{{ notification.title }}</h5>
     </header>
 
     <div v-html="bodyText"></div>
 
     <AppButton>
-      <a :href="`//${notification['notification.ctaUrl']}`">
-        {{ notification["notification.cta"] }}
+      <a :href="`//${notification.ctaUrl}`">
+        {{ notification.cta }}
       </a>
     </AppButton>
   </div>
