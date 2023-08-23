@@ -104,4 +104,23 @@ describe("'Notifications' service", () => {
 		expect(notification.ctaUrl).toBeTruthy();
 		expect(notification.cta).toEqual('Learn More');
 	});
+
+	it('can be edited by an admin', async () => {
+		// create notification
+		const notification = await app.service('notifications').create({
+			title: 'Test title',
+			body: 'test content'
+		});
+
+		// update notification
+		const updated = await app.service('notifications').patch(notification.id, {
+			title: 'Updated title'
+		});
+
+		// fetch model from db
+		const model = await app.service('notifications').Model.findByPk(notification.id);
+
+		// check that model from db has updated title property
+		expect(model.title).toEqual(updated.title);
+	});
 });
