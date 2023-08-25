@@ -19,7 +19,6 @@
     },
 
     async created() {
-      console.log(this.$route.params.id)
       this.notification = await getServiceStore("notifications").get(
         this.$route.params.id
       )

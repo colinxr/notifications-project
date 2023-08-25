@@ -62,7 +62,5 @@ Promise.all([auth.authenticate()])
   .then(() => {
     app.use(router)
 
-    console.log(router)
-
     app.mount("#app")
   })

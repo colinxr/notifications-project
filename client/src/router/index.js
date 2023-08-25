@@ -22,11 +22,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // if (to.name !== "home") return next()
-  const userId = to.query.userId
+  console.log(to)
+  if (to.name !== "home") return next()
 
   // If userId is not provided, set it to 1
-  if (!userId) return next({ ...to, query: { ...to.query, userId: 1 } })
+  if (!to.query.userId)
+    return next({ ...to, query: { ...to.query, userId: 1 } })
 
   return next()
 })

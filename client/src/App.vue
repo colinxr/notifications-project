@@ -18,15 +18,11 @@
     },
 
     async created() {
-      if (!this.$route.query.userId) {
-        await this.$router.replace({
-          query: { ...this.$route.query, userId: 1 },
-        })
-      }
-
       await getServiceStore("notifications").fetchForUser(
-        this.$route.query.userId
+        this.$route.query.userId || 1
       )
+      // await getServiceStore("users").find()
+      // console.log(tk)
     },
 
     computed: {
