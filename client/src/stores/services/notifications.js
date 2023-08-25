@@ -18,8 +18,7 @@ export default {
       this.all = data
     },
 
-    updateAsRead(readOnServer) {
-      const idsToUpdate = readOnServer.map(el => el.id)
+    updateAsRead(idsToUpdate) {
       const updatedNotifications = this.all.map(el => {
         if (!idsToUpdate.includes(el.user_notificationId)) return el
 

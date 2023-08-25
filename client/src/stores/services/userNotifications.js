@@ -16,7 +16,9 @@ export default {
         }
       )
 
-      await getServiceStore("notifications").updateAsRead(data)
+      const ids = data.map(el => el.id)
+
+      await getServiceStore("notifications").updateAsRead(ids)
 
       return data
     },

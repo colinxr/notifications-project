@@ -22,8 +22,6 @@
       this.notification = await getServiceStore("notifications").get(
         this.$route.params.id
       )
-
-      console.log(this.notification)
     },
   }
 </script>
@@ -36,7 +34,6 @@
 
     <template v-slot:content>
       <NotificationsDetail v-if="notification" :notification="notification" />
-      <div v-else>wtf</div>
     </template>
   </ModalContainer>
 </template>
