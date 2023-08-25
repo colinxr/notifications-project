@@ -18,11 +18,8 @@
     },
 
     async created() {
-      await getServiceStore("notifications").fetchForUser(
-        this.$route.query.userId || 1
-      )
+      await this.fetchNotifications(this.$route.query.userId || 1)
       // await getServiceStore("users").find()
-      // console.log(tk)
     },
 
     computed: {
@@ -34,6 +31,18 @@
     watch: {
       unreadNotifications(newVal, old) {
         this.modalIsOpen = newVal.length ? true : false
+      },
+
+      async $route(to, from) {
+        if (to.query.userId !== from.query.userId) {
+          await this.fetchNotifications(to.query.userId)
+        }
+      },
+    },
+
+    methods: {
+      async fetchNotifications(userId) {
+        await getServiceStore("notifications").fetchForUser(userId)
       },
     },
 

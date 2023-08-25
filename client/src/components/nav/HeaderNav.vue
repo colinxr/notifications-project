@@ -1,5 +1,7 @@
 <script>
+  import { getServiceStore } from "../../plugins/FeathersAPI"
   import AppButton from "../AppButton.vue"
+  import UserSelect from "../UserSelect.vue"
   import NotificationsMenuItem from "../notifications/NotificationsMenuItem.vue"
 
   export default {
@@ -7,6 +9,26 @@
     components: {
       AppButton,
       NotificationsMenuItem,
+      UserSelect,
+    },
+
+    // mixins: [
+    //   serviceFindMixin({
+    //     service: "user",
+    //     name: "allUsers",
+    //   }),
+    // ],
+
+    data() {
+      return {
+        users: [],
+      }
+    },
+
+    async created() {
+      const { data } = await getServiceStore("users").find()
+
+      this.users = data
     },
   }
 </script>
@@ -18,13 +40,7 @@
         <NotificationsMenuItem />
       </li>
       <li>
-        <AppButton
-          data-dropdown-toggle="notification-dropdown"
-          class="menu__button"
-          sr_text="Change User"
-        >
-          Change User
-        </AppButton>
+        <UserSelect :options="users" />
       </li>
     </ul>
   </nav>
