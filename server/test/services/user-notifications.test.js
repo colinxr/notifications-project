@@ -40,38 +40,6 @@ describe("'UserNotifications' service", () => {
 		}
 	});
 
-	it('can get the notifications filtered by User ID', async () => {
-		const { data } = await app.service('user/notifications').find({
-			query: {
-				userId: user.id
-			}
-		});
-		expect(data.length).toEqual(3);
-	});
-
-	it("can sort userNotifications by notification's publishedAt property", async () => {
-		const newNotifications = await createNotifications(3);
-		await Promise.all(newNotifications.map(async (el) => await el.addUser(user.id)));
-
-		const notifications = await app.service('user/notifications').Model.findAll({ where: { userId: user.id } });
-		expect(notifications.length).toEqual(6);
-
-		const { data } = await app.service('user/notifications').find({
-			query: {
-				userId: user.id
-			}
-		});
-
-		const sortedArray = data.sort((a, b) => {
-			const dateA = new Date(a['notification.publishedAt']);
-			const dateB = new Date(b['notification.publishedAt']);
-			return dateB - dateA; // Descending order
-		});
-
-		expect(data.length).toEqual(6);
-		expect(data).toStrictEqual(sortedArray);
-	});
-
 	it('can mark user notification as read', async () => {
 		const notifications = await app.service('user/notifications').Model.findAll({ limit: 1, attributes: ['id'] });
 		/* eslint-disable-next-line */

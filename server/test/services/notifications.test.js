@@ -2,15 +2,12 @@ const app = require('../../src/app');
 const sequelize = app.get('sequelizeClient');
 const { createUsers } = require('../factories/user.factory');
 const { BadRequest } = require('@feathersjs/errors');
+const { userFactory } = require('../factories/user.factory');
 
-beforeAll(async () => {
+const { createNotifications } = require('../factories/notification.factory');
+
+beforeEach(async () => {
 	await sequelize.sync({ force: true, alter: true });
-
-	Object.keys(sequelize.models).forEach(function (modelName) {
-		if ('associate' in sequelize.models[modelName]) {
-			sequelize.models[modelName].associate(sequelize.models);
-		}
-	});
 });
 
 describe("'Notifications' service", () => {
@@ -136,9 +133,40 @@ describe("'Notifications' service", () => {
 
 		const { data } = await app.service('notifications').find({ query: { userId: users[0].id } });
 
-		console.log(data);
 		expect(data.length).toEqual(1);
 		expect(data[0].readAt).toBe(null);
 		expect(data[0].userId).toBe(users[0].id);
 	});
+});
+
+it("can sort userNotifications by notification's publishedAt property", async () => {
+	const user = await userFactory({
+		email: 'test@example.com',
+		password: 'supersecret'
+	});
+
+	const notifications = await createNotifications(3);
+	await Promise.all(notifications.map(async (el) => await el.addUser(user.id)));
+
+	const newNotifications = await createNotifications(3);
+	await Promise.all(newNotifications.map(async (el) => await el.addUser(user.id)));
+
+	const user_notifications = await app.service('user/notifications').Model.findAll({ where: { userId: user.id } });
+
+	expect(user_notifications.length).toEqual(6);
+
+	const { data } = await app.service('notifications').find({
+		query: {
+			userId: user.id
+		}
+	});
+
+	const sortedArray = data.sort((a, b) => {
+		const dateA = new Date(a.publishedAt);
+		const dateB = new Date(b.publishedAt);
+		return dateB - dateA; // Descending order
+	});
+
+	expect(data.length).toEqual(6);
+	expect(data).toStrictEqual(sortedArray);
 });
