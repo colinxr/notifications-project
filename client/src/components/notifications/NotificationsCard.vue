@@ -1,4 +1,6 @@
 <script>
+  import { getServiceStore } from "@/plugins/FeathersAPI"
+
   import { useDate } from "../../composables/useDateComposable"
   const { getReadableDate } = useDate()
 
@@ -17,7 +19,9 @@
 
     methods: {
       handleOpen() {
-        alert(this.notification.title)
+        console.log(getServiceStore("notifications").openNotifications)
+
+        getServiceStore("notifications").openNotifications = [this.notification]
       },
     },
   }

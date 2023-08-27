@@ -7,6 +7,7 @@ export default {
   },
   state: {
     all: [],
+    openNotifications: [],
   },
   getters: {
     unread: state => state.all.filter(({ readAt }) => readAt === null),
@@ -16,6 +17,7 @@ export default {
       const { data } = await this.find({ query: { userId } })
 
       this.all = data
+      this.openNotifications = this.unread
     },
 
     updateAsRead(idsToUpdate) {

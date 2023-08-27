@@ -19,17 +19,16 @@
 
     async created() {
       await this.fetchNotifications(this.$route.query.userId || 1)
-      // await getServiceStore("users").find()
     },
 
     computed: {
-      unreadNotifications() {
-        return getServiceStore("notifications").unread
+      openNotifications() {
+        return getServiceStore("notifications").openNotifications
       },
     },
 
     watch: {
-      unreadNotifications(newVal, old) {
+      openNotifications(newVal, old) {
         this.modalIsOpen = newVal.length ? true : false
       },
 
@@ -43,6 +42,10 @@
     methods: {
       async fetchNotifications(userId) {
         await getServiceStore("notifications").fetchForUser(userId)
+      },
+
+      closeModal() {
+        this.modalIsOpen = false
       },
     },
 
@@ -79,8 +82,8 @@
 
   <NotificationsModal
     v-if="modalIsOpen"
-    :notifications="unreadNotifications"
-    @handleClose="modalIsOpen = false"
+    :notifications="openNotifications"
+    @handleClose="closeModal"
   />
 </template>
 
