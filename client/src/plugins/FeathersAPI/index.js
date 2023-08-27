@@ -260,7 +260,6 @@ const mapServiceActions = (service, actions = []) => {
 }
 
 const serviceFindMixin = options => {
-  console.log(stores)
   const service = options.service
   const name = options.name
   const nameToUse = name

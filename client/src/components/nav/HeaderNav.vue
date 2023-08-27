@@ -12,13 +12,6 @@
       UserSelect,
     },
 
-    // mixins: [
-    //   serviceFindMixin({
-    //     service: "user",
-    //     name: "allUsers",
-    //   }),
-    // ],
-
     data() {
       return {
         users: [],
