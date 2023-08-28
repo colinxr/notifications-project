@@ -19,17 +19,18 @@
 
     async created() {
       await this.fetchNotifications(this.$route.query.userId || 1)
-      // await getServiceStore("users").find()
+
+      this.modalIsOpen = getServiceStore("notifications").showModal
     },
 
     computed: {
-      unreadNotifications() {
-        return getServiceStore("notifications").unread
+      modalNotifications() {
+        return getServiceStore("notifications").forModal
       },
     },
 
     watch: {
-      unreadNotifications(newVal, old) {
+      modalNotifications(newVal, old) {
         this.modalIsOpen = newVal.length ? true : false
       },
 
@@ -75,11 +76,12 @@
 
 <template>
   <AppHeader />
+
   <router-view />
 
   <NotificationsModal
     v-if="modalIsOpen"
-    :notifications="unreadNotifications"
+    :notifications="modalNotifications"
     @handleClose="modalIsOpen = false"
   />
 </template>

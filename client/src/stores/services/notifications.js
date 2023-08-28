@@ -8,9 +8,21 @@ export default {
   state: {
     all: [],
   },
+
   getters: {
-    unread: state => state.all.filter(({ readAt }) => readAt === null),
+    unread(state) {
+      return state.all.filter(({ readAt }) => readAt === null)
+    },
+
+    forModal() {
+      return this.unread.filter(({ type }) => type !== "event")
+    },
+
+    showModal() {
+      return this.forModal.length
+    },
   },
+
   actions: {
     async fetchForUser(userId) {
       const { data } = await this.find({ query: { userId } })
