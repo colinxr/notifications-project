@@ -19,10 +19,12 @@ module.exports = function (app) {
 			},
 			body: {
 				type: DataTypes.TEXT,
-				allowNull: false,
+				allowNull: true,
 				validate: {
-					notNull: {
-						msg: 'Notification body content is required.' // Custom error message for notNull validation
+					customValidator(value) {
+						if (value === null && this.type === 'news') {
+							throw new Error('This Notification must have a body.');
+						}
 					}
 				}
 			},
@@ -33,6 +35,10 @@ module.exports = function (app) {
 			ctaUrl: {
 				type: DataTypes.TEXT,
 				allowNull: true
+			},
+			type: {
+				type: DataTypes.ENUM(['event', 'news']),
+				defaultValue: 'news'
 			},
 			publishedAt: {
 				type: DataTypes.DATE,

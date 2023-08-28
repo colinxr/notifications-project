@@ -15,15 +15,13 @@ module.exports = () => {
 			const query = {
 				attributes: ['id']
 			};
+
 			if (params.userIds)
 				query.where = {
 					id: params.userIds
 				};
 
-			console.log(query);
 			const users = await Users.findAll(query);
-
-			console.log(users);
 
 			const notification = await Notifications.findByPk(result.id);
 

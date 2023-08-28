@@ -28,6 +28,7 @@ describe("'Notifications' service", () => {
 		expect(data).toBeTruthy();
 		expect(data.title).toEqual('Test Notification');
 		expect(data.publishedAt).toEqual(currentDate);
+		expect(data.type).toEqual('news');
 	});
 
 	it('throws error if data does not validate', async () => {
