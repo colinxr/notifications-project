@@ -7,15 +7,12 @@ export default {
   },
   state: {
     all: [],
+    forModal: [],
   },
 
   getters: {
     unread(state) {
       return state.all.filter(({ readAt }) => readAt === null)
-    },
-
-    forModal() {
-      return this.unread.filter(({ type }) => type !== "event")
     },
 
     showModal() {
@@ -28,6 +25,8 @@ export default {
       const { data } = await this.find({ query: { userId } })
 
       this.all = data
+
+      this.filterForModal()
     },
 
     updateAsRead(idsToUpdate) {
@@ -39,6 +38,16 @@ export default {
       })
 
       this.all = updatedNotifications
+    },
+
+    filterForModal(idToShow = null) {
+      if (!idToShow) {
+        this.forModal = this.unread.filter(({ type }) => type !== "event")
+        return
+      }
+
+      this.forModal = this.all.filter(({ id }) => idToShow == id)
+      return
     },
   },
 }

@@ -9,17 +9,13 @@
     },
 
     props: {
-      isOpen: Boolean,
       notifications: Array,
     },
 
     methods: {
-      toggleNotificationsPane() {
-        this.paneIsOpen = !this.paneIsOpen
-      },
-
       emitClose() {
-        this.emit("closePane")
+        console.log("in notification pane")
+        this.$emit("closePane")
       },
     },
   }
@@ -32,6 +28,7 @@
         v-for="(notification, i) in notifications"
         :key="i"
         :notification="notification"
+        @closePane="emitClose"
       />
     </template>
     <template v-else>

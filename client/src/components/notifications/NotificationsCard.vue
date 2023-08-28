@@ -1,6 +1,7 @@
 <script>
   import { useDate } from "../../composables/useDateComposable"
   const { getReadableDate } = useDate()
+  import { getServiceStore } from "@/plugins/FeathersAPI"
 
   export default {
     name: "NotificationsCard",
@@ -17,7 +18,22 @@
 
     methods: {
       handleOpen() {
-        alert(this.notification.title)
+        this.$emit("closePane")
+
+        if (this.notification.type !== "event") {
+          return getServiceStore("notifications").filterForModal(
+            this.notification.id
+          )
+        }
+
+        this.markAsRead()
+        this.$router.push(this.notification.ctaUrl)
+      },
+
+      async markAsRead() {
+        const data = await getServiceStore("user/notifications").markAsRead([
+          this.notification.id,
+        ])
       },
     },
   }

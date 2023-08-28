@@ -31,9 +31,7 @@
           ({ user_notificationId }) => user_notificationId
         )
         const data =
-          await getServiceStore("user/notifications").markAsRead(idsToUpdate)
-
-        console.log(data)
+          await getServiceStore("user/notifications").markAllAsRead(idsToUpdate)
       },
     },
   }

@@ -7,7 +7,7 @@ export default {
     return data
   },
   actions: {
-    async markAsRead(idsToUpdate) {
+    async markAllAsRead(idsToUpdate) {
       const data = await this.patch(
         null,
         { readAt: new Date() },
@@ -19,6 +19,14 @@ export default {
       const ids = data.map(el => el.id)
 
       await getServiceStore("notifications").updateAsRead(ids)
+
+      return data
+    },
+
+    async markAsRead(id) {
+      const data = await this.patch(id, { readAt: new Date() })
+
+      await getServiceStore("notifications").updateAsRead([ids])
 
       return data
     },

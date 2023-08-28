@@ -34,6 +34,7 @@
       },
 
       handleClose() {
+        console.log("got here")
         this.paneIsOpen = false
       },
     },
@@ -70,9 +71,8 @@
     <NotificationsPane
       v-if="paneIsOpen"
       class="notifications__pane"
-      :isOpen="paneIsOpen"
       :notifications="allNotifications"
-      @emitClose="handleClose"
+      @closePane="handleClose"
     />
   </div>
 </template>
