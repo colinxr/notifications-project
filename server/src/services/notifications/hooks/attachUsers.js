@@ -2,7 +2,8 @@
 
 module.exports = () => {
 	return async (context) => {
-		const { app, result } = context;
+		const { app, result, params } = context;
+
 		try {
 			// const { app, result: notification } = context;
 			// const userService = app.service('users');
@@ -11,7 +12,19 @@ module.exports = () => {
 			const Users = app.service('users').Model;
 			const Notifications = app.service('notifications').Model;
 
-			const users = await Users.findAll({ attributes: ['id'] });
+			const query = {
+				attributes: ['id']
+			};
+			if (params.userIds)
+				query.where = {
+					id: params.userIds
+				};
+
+			console.log(query);
+			const users = await Users.findAll(query);
+
+			console.log(users);
+
 			const notification = await Notifications.findByPk(result.id);
 
 			await notification.addUsers(users);

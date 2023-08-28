@@ -66,8 +66,8 @@ describe("'Notifications' service", () => {
 
 	it('attaches a new notification to all existing users', async () => {
 		// create users
-		const numUsersToNotify = 5;
-		await createUsers(numUsersToNotify);
+		const numUsers = 5;
+		await createUsers(numUsers);
 
 		// create notification
 		const data = await app.service('notifications').create({
@@ -84,7 +84,34 @@ describe("'Notifications' service", () => {
 		});
 
 		expect(notification.users).toBeTruthy();
-		expect(notification.users.length).toEqual(numUsersToNotify);
+		expect(notification.users.length).toEqual(numUsers);
+	});
+
+	it('attaches a new notification to specific users', async () => {
+		const numUsersToNotify = 5;
+		const users = await createUsers(numUsersToNotify);
+		const usersToNotify = users.filter((el, i) => i < 3).map(({ id }) => id);
+
+		const data = await app.service('notifications').create(
+			{
+				title: 'Test title',
+				body: 'test content'
+			},
+			{
+				userIds: usersToNotify
+			}
+		);
+
+		const notification = await app.service('notifications').Model.findByPk(data.id, {
+			include: [
+				{
+					model: app.service('users').Model
+				}
+			]
+		});
+
+		expect(notification.users).toBeTruthy();
+		expect(notification.users.length).toEqual(usersToNotify.length);
 	});
 
 	it('can have a CTA and CTA URL', async () => {
