@@ -1,5 +1,6 @@
 <script>
-  import { getServiceStore, serviceGetMixin } from "@/plugins/FeathersAPI"
+  import FeathersAPI from "@/plugins/FeathersAPI"
+  import { getServiceStore } from "@/plugins/FeathersAPI"
 
   import AppHeader from "./components/AppHeader.vue"
   import NotificationsModal from "./components/notifications/NotificationsModal.vue"

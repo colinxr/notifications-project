@@ -46,10 +46,15 @@
 
     button {
       cursor: pointer;
-      background: #f0f0f0;
+      background-color: var(--secondary);
       border: 1px solid #ccc;
       padding: 5px 10px;
       border-radius: 3px;
+
+      &:hover {
+        background-color: var(--neutral-white);
+        color: var(--primary);
+      }
     }
 
     &__menu {

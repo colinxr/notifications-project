@@ -18,7 +18,6 @@
 
     methods: {
       emitClose() {
-        console.log("in notification pane")
         this.$emit("closePane")
       },
 
@@ -66,9 +65,7 @@
   .notifications__pane {
     background-color: rgb(17, 24, 39);
     border-radius: 5px;
-
     width: 300px;
-
     right: -50px;
     position: relative;
 

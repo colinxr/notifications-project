@@ -37,15 +37,12 @@ export default {
     },
 
     updateAsRead(idsToUpdate) {
-      console.log(idsToUpdate)
       const updatedNotifications = this.all.map(el => {
         if (!idsToUpdate.includes(el.user_notificationId)) return el
 
         el.readAt = true
         return el
       })
-
-      console.log(updatedNotifications)
 
       this.all = updatedNotifications
     },

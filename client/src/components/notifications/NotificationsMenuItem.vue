@@ -34,7 +34,6 @@
       },
 
       handleClose() {
-        console.log("got here")
         this.paneIsOpen = false
       },
     },

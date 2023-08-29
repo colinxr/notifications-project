@@ -36,8 +36,6 @@
           )
         }
 
-        console.log(this.notification)
-
         const data = await getServiceStore("user/notifications").markAsRead([
           this.notification.user_notificationId,
         ])
