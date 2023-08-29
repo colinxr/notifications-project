@@ -1,4 +1,7 @@
 <script>
+  import { getServiceStore } from "@/plugins/FeathersAPI"
+
+  import AppButton from "../AppButton.vue"
   import NotificationsCard from "./NotificationsCard.vue"
 
   export default {
@@ -6,6 +9,7 @@
 
     components: {
       NotificationsCard,
+      AppButton,
     },
 
     props: {
@@ -17,26 +21,44 @@
         console.log("in notification pane")
         this.$emit("closePane")
       },
+
+      async markAllAsRead() {
+        const idsToUpdate = this.notifications
+          .filter(({ readAt }) => readAt === null)
+          .map(({ user_notificationId }) => user_notificationId)
+
+        const data =
+          await getServiceStore("user/notifications").markAllAsRead(idsToUpdate)
+      },
     },
   }
 </script>
 
 <template>
   <div class="notifications__pane">
-    <template v-if="notifications.length">
-      <NotificationsCard
-        v-for="(notification, i) in notifications"
-        :key="i"
-        :notification="notification"
-        @closePane="emitClose"
-      />
-    </template>
-    <template v-else>
-      <div class="empty-container">
-        <span>Shoot!</span>
-        <span> No Notifications Yet! </span>
-      </div>
-    </template>
+    <div class="notifications__pane__content">
+      <template v-if="notifications.length">
+        <NotificationsCard
+          v-for="(notification, i) in notifications"
+          :key="i"
+          :notification="notification"
+          @closePane="emitClose"
+        />
+      </template>
+
+      <template v-else>
+        <div class="empty-container">
+          <span>Shoot!</span>
+          <span> No Notifications Yet! </span>
+        </div>
+      </template>
+    </div>
+
+    <footer v-if="notifications.length">
+      <AppButton @click="markAllAsRead">
+        <span>Mark all as read</span>
+      </AppButton>
+    </footer>
   </div>
 </template>
 
@@ -44,10 +66,11 @@
   .notifications__pane {
     background-color: rgb(17, 24, 39);
     border-radius: 5px;
-    padding: 15px;
+
     width: 300px;
-    height: 400px;
+
     right: -50px;
+    position: relative;
 
     &:before {
       content: "";
@@ -57,6 +80,28 @@
       border-style: solid;
       border-color: transparent transparent rgb(17, 24, 39) transparent;
       position: absolute;
+    }
+
+    &__content {
+      padding: 15px;
+      height: 250px;
+      overflow-y: scroll;
+    }
+
+    footer {
+      position: absolute;
+      background-color: rgb(17, 24, 39);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      margin: 10px auto 0;
+      border-radius: 5px;
+
+      span {
+        font-size: 0.75rem;
+      }
     }
   }
 
