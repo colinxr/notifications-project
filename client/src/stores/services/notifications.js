@@ -22,7 +22,14 @@ export default {
 
   actions: {
     async fetchForUser(userId) {
-      const { data } = await this.find({ query: { userId } })
+      const { data } = await this.find({
+        query: {
+          userId: userId,
+          $sort: {
+            publishedAt: -1,
+          },
+        },
+      })
 
       this.all = data
 
