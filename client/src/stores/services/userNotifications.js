@@ -26,7 +26,7 @@ export default {
     async markAsRead(id) {
       const data = await this.patch(id, { readAt: new Date() })
 
-      await getServiceStore("notifications").updateAsRead([ids])
+      await getServiceStore("notifications").updateAsRead([id])
 
       return data
     },
