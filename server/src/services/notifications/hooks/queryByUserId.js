@@ -22,7 +22,7 @@ module.exports = () => {
 		];
 
 		// remove unneccsary query item
-		delete context.params.query;
+		delete context.params.query.userId;
 		return context;
 	};
 };

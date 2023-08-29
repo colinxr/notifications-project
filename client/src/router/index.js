@@ -16,6 +16,11 @@ const router = createRouter({
       component: () => import("../views/About.vue"),
     },
     {
+      path: "/patient/:id/homework",
+      name: "homework",
+      component: () => import("../views/HomeworkReview.vue"),
+    },
+    {
       path: "/notifications/preview/:id",
       name: "notifications-preview",
       component: () => import("../views/notifications/Preview.vue"),
@@ -24,8 +29,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== "home") return next()
-
   // If userId is not provided, set it to 1
   if (!to.query.userId)
     return next({ ...to, query: { ...to.query, userId: 1 } })
