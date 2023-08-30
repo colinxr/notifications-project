@@ -92,8 +92,13 @@
     }
 
     .notifications__alert {
+      position: absolute;
       top: 10px;
       right: 10px;
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      border-radius: 4px;
     }
   }
 </style>

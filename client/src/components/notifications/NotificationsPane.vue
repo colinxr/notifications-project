@@ -22,15 +22,7 @@
       },
     },
 
-    async created() {
-      await this.fetchNotifications(this.$route.query.userId || 1)
-    },
-
     methods: {
-      async fetchNotifications(userId) {
-        await getServiceStore("notifications").fetchForUser(userId)
-      },
-
       toggleNotificationsPane() {
         getServiceStore("notifications").togglePane()
       },
@@ -40,16 +32,7 @@
           .filter(({ readAt }) => readAt === null)
           .map(({ user_notificationId }) => user_notificationId)
 
-        const data =
-          await getServiceStore("user/notifications").markAllAsRead(idsToUpdate)
-      },
-    },
-
-    watch: {
-      async $route(to, from) {
-        if (to.query.userId !== from.query.userId) {
-          await this.fetchNotifications(to.query.userId)
-        }
+        await getServiceStore("user/notifications").markAllAsRead(idsToUpdate)
       },
     },
   }

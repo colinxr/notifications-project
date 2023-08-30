@@ -6,6 +6,7 @@
 
   export default {
     name: "App",
+
     components: {
       AppHeader,
       NotificationsModal,
@@ -17,7 +18,8 @@
       }
     },
 
-    async mounted() {
+    async created() {
+      await this.fetchNotifications(this.$route.query.userId || 1)
       this.modalIsOpen = getServiceStore("notifications").showModal
     },
 
@@ -27,9 +29,21 @@
       },
     },
 
+    methods: {
+      async fetchNotifications(userId) {
+        await getServiceStore("notifications").fetchForUser(userId)
+      },
+    },
+
     watch: {
       modalNotifications(newVal, old) {
         this.modalIsOpen = newVal.length ? true : false
+      },
+
+      async $route(to, from) {
+        if (to.query.userId !== from.query.userId) {
+          await this.fetchNotifications(to.query.userId)
+        }
       },
     },
 

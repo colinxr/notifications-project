@@ -23,8 +23,6 @@
             <slot name="header"></slot>
             <div class="modal-body__close" @click="handleClose">
               <svg
-                width="32"
-                height="32"
                 viewBox="0 0 32 32"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,6 +82,13 @@
 
     &__close {
       cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    svg {
+      height: 32px;
+      width: 32px;
     }
   }
 

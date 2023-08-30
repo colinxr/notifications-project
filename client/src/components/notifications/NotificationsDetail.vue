@@ -74,6 +74,7 @@
         line-height: normal;
         margin-bottom: 16px;
         color: var(--primary);
+        text-transform: capitalize;
       }
     }
   }
