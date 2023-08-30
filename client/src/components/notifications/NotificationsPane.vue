@@ -12,13 +12,27 @@
       AppButton,
     },
 
-    props: {
-      notifications: Array,
+    computed: {
+      notifications() {
+        return getServiceStore("notifications").all
+      },
+
+      hasUnread() {
+        return getServiceStore("notifications").unread.length
+      },
+    },
+
+    async created() {
+      await this.fetchNotifications(this.$route.query.userId || 1)
     },
 
     methods: {
-      emitClose() {
-        this.$emit("closePane")
+      async fetchNotifications(userId) {
+        await getServiceStore("notifications").fetchForUser(userId)
+      },
+
+      toggleNotificationsPane() {
+        getServiceStore("notifications").togglePane()
       },
 
       async markAllAsRead() {
@@ -30,18 +44,26 @@
           await getServiceStore("user/notifications").markAllAsRead(idsToUpdate)
       },
     },
+
+    watch: {
+      async $route(to, from) {
+        if (to.query.userId !== from.query.userId) {
+          await this.fetchNotifications(to.query.userId)
+        }
+      },
+    },
   }
 </script>
 
 <template>
-  <div class="notifications__pane">
-    <div class="notifications__pane__content">
+  <div class="notifications-pane">
+    <div class="notifications-pane__content">
       <template v-if="notifications.length">
         <NotificationsCard
           v-for="(notification, i) in notifications"
           :key="i"
           :notification="notification"
-          @closePane="emitClose"
+          @closePane="toggleNotificationsPane"
         />
       </template>
 
@@ -53,7 +75,7 @@
       </template>
     </div>
 
-    <footer v-if="notifications.length">
+    <footer v-if="hasUnread">
       <AppButton @click="markAllAsRead">
         <span>Mark all as read</span>
       </AppButton>
@@ -62,12 +84,15 @@
 </template>
 
 <style lang="scss">
-  .notifications__pane {
+  .notifications-pane {
     background-color: rgb(17, 24, 39);
     border-radius: 5px;
     width: 300px;
-    right: -50px;
+    right: 125px;
     position: relative;
+    position: absolute;
+    margin-top: 5px;
+    top: 110%;
 
     &:before {
       content: "";

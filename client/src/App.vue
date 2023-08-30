@@ -1,5 +1,4 @@
 <script>
-  import FeathersAPI from "@/plugins/FeathersAPI"
   import { getServiceStore } from "@/plugins/FeathersAPI"
 
   import AppHeader from "./components/AppHeader.vue"
@@ -18,9 +17,7 @@
       }
     },
 
-    async created() {
-      await this.fetchNotifications(this.$route.query.userId || 1)
-
+    async mounted() {
       this.modalIsOpen = getServiceStore("notifications").showModal
     },
 
@@ -33,22 +30,6 @@
     watch: {
       modalNotifications(newVal, old) {
         this.modalIsOpen = newVal.length ? true : false
-      },
-
-      async $route(to, from) {
-        if (to.query.userId !== from.query.userId) {
-          await this.fetchNotifications(to.query.userId)
-        }
-      },
-    },
-
-    methods: {
-      async fetchNotifications(userId) {
-        await getServiceStore("notifications").fetchForUser(userId)
-      },
-
-      closeModal() {
-        this.modalIsOpen = false
       },
     },
 

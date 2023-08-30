@@ -8,6 +8,7 @@ export default {
   state: {
     all: [],
     forModal: [],
+    showPane: false,
   },
 
   getters: {
@@ -21,6 +22,10 @@ export default {
   },
 
   actions: {
+    togglePane() {
+      this.showPane = !this.showPane
+    },
+
     async fetchForUser(userId) {
       const { data } = await this.find({
         query: {

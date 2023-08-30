@@ -1,9 +1,19 @@
 <script>
+  import { getServiceStore } from "@/plugins/FeathersAPI"
+
   import HeaderNav from "./nav/HeaderNav.vue"
+  import NotificationsPane from "./notifications/NotificationsPane.vue"
   export default {
     name: "AppHeader",
     components: {
       HeaderNav,
+      NotificationsPane,
+    },
+
+    computed: {
+      showPane() {
+        return getServiceStore("notifications").showPane
+      },
     },
   }
 </script>
@@ -13,6 +23,12 @@
     <h1>Tactus VRC Notifcations</h1>
 
     <HeaderNav />
+
+    <NotificationsPane
+      v-if="showPane"
+      class="notifications__pane"
+      @closePane="handleClose"
+    />
   </header>
 </template>
 
@@ -25,6 +41,7 @@
     align-items: center;
     padding: 0 20px;
     color: var(--neutral-white);
+    position: relative;
 
     ul {
       list-style-type: none;
