@@ -59,7 +59,6 @@ export default {
       }
 
       this.forModal = this.all.filter(({ id }) => idToShow == id)
-      return
     },
   },
 }

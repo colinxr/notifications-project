@@ -18,8 +18,6 @@ module.exports = () => {
 				if (a.readAt !== null && b.readAt === null) return 1;
 
 				return new Date(a.publishedAt) - new Date(a.publishedAt);
-
-				// if (new Date(a.publishedAt) < new Date(a.publishedAt)) return 1;
 			});
 
 		context.result.data = sanitizedData;
