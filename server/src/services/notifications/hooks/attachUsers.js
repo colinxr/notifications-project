@@ -1,4 +1,5 @@
 // const notificationQueue = require('../../../queues/notificationsQueue');
+const { Op } = require('sequelize');
 
 module.exports = () => {
 	return async (context) => {
@@ -18,7 +19,7 @@ module.exports = () => {
 
 			if (params.userIds)
 				query.where = {
-					id: params.userIds
+					id: { [Op.in]: params.userIds }
 				};
 
 			const users = await Users.findAll(query);
